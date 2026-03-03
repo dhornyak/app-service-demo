@@ -1,0 +1,30 @@
+﻿@page "/variables"
+@inject IConfiguration Configuration
+
+<h3>Environment Variables</h3>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Key</th>
+            <th>Value</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in GetConfigurationValues())
+        {
+            <tr>
+                <td>@item.Key</td>
+                <td>@item.Value</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    private IEnumerable<KeyValuePair<string, string?>> GetConfigurationValues()
+    {
+        return Configuration.AsEnumerable()
+            .OrderBy(x => x.Key);
+    }
+}
