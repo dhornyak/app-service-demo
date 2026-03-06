@@ -55,13 +55,11 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v3
+      - name: Set App Settings
+        id: settings
+        uses: azure/appservice-settings@v1
         with:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
-          slot-name: 'Production'
-          package: .
           app-settings-json: |
             [
               {
@@ -70,4 +68,12 @@ jobs:
                 "slotSetting": false
               }
             ]
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
+          slot-name: 'Production'
+          package: .
           
