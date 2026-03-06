@@ -62,4 +62,12 @@ jobs:
           app-name: ${{ secrets.AZURE_WEBAPP_NAME }}
           slot-name: 'Production'
           package: .
+          app-settings-json: |
+            [
+              {
+                "name": "APP_SETTING_FROM_GITHUB",
+                "value": "${{ secrets.APP_SETTING_FROM_GITHUB }}",
+                "slotSetting": false
+              }
+            ]
           
